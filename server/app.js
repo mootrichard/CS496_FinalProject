@@ -9,6 +9,7 @@ const passport = require('passport');
 const mongoose = require('mongoose');
 const routes = require('./routes');
 const mongodbUrl = require('./config/auth').mongodb.localhost;
+require('./config/passport')(passport);
 const app = express();
 
 // view engine setup
@@ -25,12 +26,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
   secret: 'cs496FinalProject',
   resave: false,
-  saveUninitialized: true,
-  cookie: { secure: true }
+  saveUninitialized: true
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-require('./config/passport')(passport);
 
 mongoose.connect(mongodbUrl);
 

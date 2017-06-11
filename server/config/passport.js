@@ -4,7 +4,7 @@ const User = require('../models/users');
 
 module.exports = (passport) => {
   passport.serializeUser((user, done)=>{
-    done(null, user.id);
+    done(null, user._id);
   });
 
   passport.deserializeUser((id, done)=>{
@@ -19,7 +19,25 @@ module.exports = (passport) => {
     callbackURL     : auth.googleAuth.callbackURL
   }, (token, refreshToken, profile, done)=>{
     process.nextTick(()=>{
-      return done(null, profile);
+      User.findOne({'googleId': profile.id}, (err, user)=>{
+        if(err) return done(err);
+        if(user){
+          return done(null, user);
+        } else {
+          const newUser = new User();
+
+          newUser.googleId = profile.id;
+          newUser.token = token;
+          newUser.refreshToken = refreshToken;
+          newUser.name = profile.displayName;
+          newUser.email = profile.emails[0].value;
+
+          newUser.save((err)=>{
+            if(err) throw err;
+            return done(null, newUser);
+          });
+        }
+      })
     })
   }))
 }
