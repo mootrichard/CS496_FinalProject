@@ -1,11 +1,14 @@
 const express = require('express');
+const session = require('express-session')
 const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const passport = require('passport');
+const mongoose = require('mongoose');
 const routes = require('./routes');
+const mongodbUrl = require('./config/auth').mongodb.localhost;
 const app = express();
 
 // view engine setup
@@ -19,6 +22,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+  secret: 'cs496FinalProject',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+require('./config/passport')(passport);
+
+mongoose.connect(mongodbUrl);
 
 app.use('/', routes);
 
