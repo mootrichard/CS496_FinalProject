@@ -9,24 +9,31 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  TouchableHighlight,
+  Navigator
 } from 'react-native';
+import { MemoryRouter, Route, Link } from 'react-router-native';
+import Dashboard from './Components/Dashboard.js';
+
+const Home = (props)=>{
+  return (
+      <Link to="/dashboard" >
+        <Text style={styles.googleButton} >Login Google+</Text>
+      </Link>
+  )
+}
 
 export default class CS496FinalProject extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to Richard's New App!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
-      </View>
+      <MemoryRouter>
+        <View style={styles.container}>
+
+        <Route exact path="/" component={Home} />
+        <Route exact path="/dashboard" component={Dashboard} />
+        </View>
+      </MemoryRouter>
     );
   }
 }
@@ -37,6 +44,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
+  },
+  googleButton: {
+    color: '#FFFFFF',
+    backgroundColor: '#2E9298',
+    borderRadius: 5,
+    padding: 10,
+    shadowColor: '#000000',
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+    shadowRadius: 10,
+    shadowOpacity: 0.25
   },
   welcome: {
     fontSize: 20,
