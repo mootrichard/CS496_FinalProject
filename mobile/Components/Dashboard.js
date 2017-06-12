@@ -7,6 +7,7 @@ import {
   Button
 } from 'react-native';
 import { NativeRouter, Route, Link } from 'react-router-native';
+import RecipeTable from './RecipeTable';
 
 export default class Dashboard extends Component {
   constructor(props){
@@ -16,7 +17,10 @@ export default class Dashboard extends Component {
   render(){
     return (
       <View style={styles.container}>
-        <Text>This is the dashboard</Text>
+        <Link to="/create">
+          <Text style={styles.button}>Create</Text>
+        </Link>
+        <RecipeTable user={this.props.user} />
         <Link to="/">
           <Text style={styles.button}>Logout</Text>
         </Link>

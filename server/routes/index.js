@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const auth = require('./auth');
-const users = require('./users');
+const recipes = require('./recipes');
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
@@ -8,7 +8,14 @@ router.get('/', (req, res, next) => {
 });
 
 router.use('/auth', auth);
-router.use('/users', users);
+router.use('/recipes', recipes);
 
+function loggedIn(req, res, next){
+  if(req.isAuthenticated()){
+    next();
+  } else {
+    res.status(401).json({error: "Unauthorized"});
+  }
+}
 
 module.exports = router;

@@ -15,8 +15,13 @@ import {
   Linking
 } from 'react-native';
 import { NativeRouter, Route, Link, Redirect } from 'react-router-native';
+import { Provider } from 'react-redux';
+
 import Dashboard from './Components/Dashboard.js';
 import Auth from './Components/Auth';
+import CreateRecipe from './Components/CreateRecipe';
+import store from './redux/store';
+
 
 export default class CS496FinalProject extends Component {
   constructor(props){
@@ -73,16 +78,23 @@ export default class CS496FinalProject extends Component {
 
   render() {
     return (
-      <NativeRouter>
-        <View style={styles.container}>
+      <Provider store={store}>
+        <NativeRouter>
+          <View style={styles.container}>
 
-        {this.state.user && (<Redirect to="/dashboard" />)}
-        <Route path="/dashboard" component={Dashboard} />
-        <Route exact path="/" component={this.Home} />
-        <Route exact path="/auth" component={Auth} />
-        <Route path="/logout" />
-        </View>
-      </NativeRouter>
+          {this.state.user && (<Redirect to="/dashboard" />)}
+          <Route path="/dashboard" render={()=>{
+            return(<Dashboard user={this.state.user} />)
+          }} />
+          <Route exact path="/" component={this.Home} />
+          <Route exact path="/auth" component={Auth} />
+          <Route path="/create" render={()=>{
+            return(<CreateRecipe user={this.state.user} />)
+          }} />
+          <Route path="/logout" />
+          </View>
+        </NativeRouter>
+      </Provider>
     );
   }
 }
