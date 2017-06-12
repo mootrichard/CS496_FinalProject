@@ -91,7 +91,14 @@ export default class CS496FinalProject extends Component {
           <Route path="/create" render={()=>{
             return(<CreateRecipe user={this.state.user} />)
           }} />
-          <Route path="/logout" />
+          <Route path="/logout" render={()=>{
+            this.setState({
+              user: undefined
+            })
+            return (
+              this.Home()
+            )
+          }}/>
           </View>
         </NativeRouter>
       </Provider>

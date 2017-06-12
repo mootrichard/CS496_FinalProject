@@ -70,7 +70,6 @@ class CreateRecipe extends Component {
 
   sendData(formData){
     formData.recipeOwner = this.props.user.googleId;
-    alert(JSON.stringify(formData));
     fetch("https://richardmoot.ngrok.io/recipes", {
       headers: {
         'Accept': 'application/json',
@@ -81,7 +80,7 @@ class CreateRecipe extends Component {
     }).then((res)=>{
       return res.json()
     }).then((results)=>{
-      alert(results);
+      console.log(results);
     }).catch(err=>console.log(err));
   }
 
@@ -111,8 +110,11 @@ class CreateRecipe extends Component {
           component={renderIngredients}
         />
         <TouchableOpacity onPress={this.props.handleSubmit(this.sendData)}>
-          <Text style={styles.formSubmit}>Submit</Text>
+          <Text style={styles.button}>Submit</Text>
         </TouchableOpacity>
+        <Link to="/dashboard">
+          <Text style={styles.button}>Back</Text>
+        </Link>
       </ScrollView>
     )
   }
@@ -143,6 +145,19 @@ const styles = StyleSheet.create({
   },
   invalid: {
     borderColor: '#F55E64'
+  },
+  button: {
+    color: '#FFFFFF',
+    backgroundColor: '#2E9298',
+    borderRadius: 5,
+    padding: 10,
+    shadowColor: '#000000',
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+    shadowRadius: 10,
+    shadowOpacity: 0.25
   }
 });
 
