@@ -13,12 +13,7 @@ router.get('/', (req,res,next)=>{
 });
 
 router.get('/google/callback', passport.authenticate('google'), (req, res, next) => {
-  res.json({
-    success: 'successful oAuth with Google',
-    params: req.params,
-    body: req.body,
-    user: req.user
-  })
+  res.redirect('CS496FinalProject://login?user=' + JSON.stringify(req.user));
 })
 
 router.get('/google', passport.authenticate('google', {

@@ -15,10 +15,11 @@ import {
 } from 'react-native';
 import { MemoryRouter, Route, Link } from 'react-router-native';
 import Dashboard from './Components/Dashboard.js';
+import Auth from './Components/Auth';
 
 const Home = (props)=>{
   return (
-      <Link to="/dashboard" >
+      <Link to="/auth" >
         <Text style={styles.googleButton} >Login Google+</Text>
       </Link>
   )
@@ -31,7 +32,7 @@ export default class CS496FinalProject extends Component {
         <View style={styles.container}>
 
         <Route exact path="/" component={Home} />
-        <Route exact path="/dashboard" component={Dashboard} />
+        <Route exact path="/auth" component={Auth} />
         </View>
       </MemoryRouter>
     );
