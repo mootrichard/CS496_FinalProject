@@ -27,7 +27,7 @@ export default class Auth extends Component {
   };
 
   // Handle Login with Google button tap
-  loginWithGoogle = () => this.openURL('http://richardmoot.ngrok.io/auth/google');
+  loginWithGoogle = () => this.openURL('https://richardmoot.ngrok.io/auth/google');
 
   componentDidMount(){
     Linking.addEventListener('url', this.handleOpenURL);

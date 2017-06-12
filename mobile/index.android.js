@@ -11,30 +11,78 @@ import {
   Text,
   View,
   TouchableHighlight,
-  Navigator
+  Button,
+  Linking
 } from 'react-native';
-import { MemoryRouter, Route, Link } from 'react-router-native';
+import { NativeRouter, Route, Link, Redirect } from 'react-router-native';
 import Dashboard from './Components/Dashboard.js';
 import Auth from './Components/Auth';
 
-const Home = (props)=>{
-  return (
-      <Link to="/auth" >
-        <Text style={styles.googleButton} >Login Google+</Text>
-      </Link>
-  )
-}
-
 export default class CS496FinalProject extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      user: undefined, // user has not logged in yet
+    };
+  }
+
+  componentDidMount(){
+    Linking.addEventListener('url', this.handleOpenURL);
+    // Launched from an external URL
+    Linking.getInitialURL().then((url) => {
+      if (url) {
+        this.handleOpenURL({ url });
+      }
+    }).catch(err => console.log(err));
+  }
+
+  componentWillUnmount() {
+    // Remove event listener
+    Linking.removeEventListener('url', this.handleOpenURL);
+  };
+
+  // Open URL in a browser
+  openURL = (url) => {
+      Linking.openURL(url);
+  };
+
+  handleOpenURL = ({ url }) => {
+    // Extract stringified user string out of the URL
+    const [, user_string] = url.match(/user=([^#]+)/);
+    this.setState({
+      // Decode the user string and parse it into JSON
+      user: JSON.parse(decodeURI(user_string))
+    });
+    if (Platform.OS === 'ios') {
+      SafariView.dismiss();
+    }
+  };
+
+  loginWithGoogle = () => this.openURL('https://richardmoot.ngrok.io/auth/google');
+
+  Home = (props)=>{
+      return (
+            <TouchableHighlight
+              onPress={this.loginWithGoogle}>
+              <Text style={styles.googleButton}>
+                Login Google+
+              </Text>
+            </TouchableHighlight>
+      )
+  };
+
   render() {
     return (
-      <MemoryRouter>
+      <NativeRouter>
         <View style={styles.container}>
 
-        <Route exact path="/" component={Home} />
+        {this.state.user && (<Redirect to="/dashboard" />)}
+        <Route path="/dashboard" component={Dashboard} />
+        <Route exact path="/" component={this.Home} />
         <Route exact path="/auth" component={Auth} />
+        <Route path="/logout" />
         </View>
-      </MemoryRouter>
+      </NativeRouter>
     );
   }
 }
