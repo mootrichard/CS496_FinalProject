@@ -87,39 +87,39 @@ class CreateRecipe extends Component {
   render(){
     return (
       <View>
-      <ScrollView style={styles.container} keyboardShouldPersistTaps={'handled'}>
-        <Text style={{ fontWeight: 'bold', marginTop: 20 }}>Recipe Name</Text>
-        <Field
-          style={{width: 100}}
-          name={'name'}
-          component={MyTextInput}
-          placeholder={'name'}
-        />
-        <Text style={{ fontWeight: 'bold', marginTop: 20 }}>Cook Time</Text>
-        <Field
-          name={'cookTime'}
-          component={MyTextInput}
-          placeholder={'1, 10, 25'}
-        />
-        <Text style={{ fontWeight: 'bold', marginTop: 20 }}>Cook Time Qty</Text>
-        <Field
-          name={'cookTimeQty'}
-          component={MyTextInput}
-          placeholder={'mins, secs, hours'}
-        />
-        <FieldArray
-          name={'ingredients'}
-          component={renderIngredients}
-        />
-      </ScrollView>
-        <View style={styles.buttonWrapper}>
-          <Link style={{padding: 5}} to="/dashboard">
-            <Text style={styles.button}>Back</Text>
-          </Link>
-          <TouchableOpacity style={{padding: 5}} onPress={this.props.handleSubmit(this.sendData)}>
-            <Text style={styles.button}>Submit</Text>
-          </TouchableOpacity>
-        </View>
+        <ScrollView style={styles.container} keyboardShouldPersistTaps={'handled'}>
+          <Text style={{ fontWeight: 'bold', marginTop: 20 }}>Recipe Name</Text>
+          <Field
+            style={{width: 100}}
+            name={'name'}
+            component={MyTextInput}
+            placeholder={'name'}
+          />
+          <Text style={{ fontWeight: 'bold', marginTop: 20 }}>Cook Time</Text>
+          <Field
+            name={'cookTime'}
+            component={MyTextInput}
+            placeholder={'1, 10, 25'}
+          />
+          <Text style={{ fontWeight: 'bold', marginTop: 20 }}>Cook Time Qty</Text>
+          <Field
+            name={'cookTimeQty'}
+            component={MyTextInput}
+            placeholder={'mins, secs, hours'}
+          />
+          <FieldArray
+            name={'ingredients'}
+            component={renderIngredients}
+          />
+          <View style={styles.buttonWrapper}>
+            <Link style={{padding: 5}} to="/dashboard">
+              <Text style={styles.button}>Back</Text>
+            </Link>
+            <TouchableOpacity style={{padding: 5}} onPress={this.props.handleSubmit(this.sendData)}>
+              <Text style={styles.button}>Submit</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
       </View>
     )
   }
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    padding: 45
+    paddingBottom: 45
   },
   formSubmit: {
     alignSelf: 'center',
@@ -159,21 +159,22 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     backgroundColor: '#2E9298',
     borderRadius: 5,
-    padding: 10,
+    padding: 15,
     shadowColor: '#000000',
     shadowOffset: {
       width: 0,
       height: 3
     },
     shadowRadius: 10,
-    shadowOpacity: 0.25
+    shadowOpacity: 0.25,
+    fontSize: 25
   },
   buttonWrapper: {
-        flexWrap: 'wrap',
-        alignItems: 'flex-start',
-        flexDirection:'row',
-        justifyContent: 'space-between',
-        margin: 10
+    flexWrap: 'wrap',
+    alignItems: 'flex-start',
+    flexDirection:'row',
+    justifyContent: 'center',
+    margin: 10
   }
 });
 

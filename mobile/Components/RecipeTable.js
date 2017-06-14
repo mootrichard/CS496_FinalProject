@@ -4,7 +4,8 @@ import {
   StyleSheet,
   Text,
   View,
-  Button
+  Button,
+  ScrollView
 } from 'react-native';
 
 export default class RecipeTable extends Component {
@@ -35,11 +36,17 @@ export default class RecipeTable extends Component {
   showRecipe() {
     return this.state.recipes.map(function(recipe, i){
       return(
-        <View key={i}>
-          <Text>Recipe: {recipe.name}</Text>
+        <View style={{
+          borderBottomWidth: 1,
+          borderColor: 'rgba(0, 0, 0, 0.4)',
+          flex:1,
+          padding: 10,
+          alignSelf: 'stretch'
+        }} key={i}>
+          <Text style={styles.title}>{recipe.name}</Text>
           <View>
-            <Text>Cook Time: {recipe.cookTime} {recipe.cookTimeQty}</Text>
-            <Text>Ingredients: </Text>
+            <Text style={styles.detail}>Cook Time: {recipe.cookTime} {recipe.cookTimeQty}</Text>
+            <Text style={styles.ingredients}>Ingredients: </Text>
             {
               (
                 recipe.ingredients.map((ingredient, i)=>{
@@ -58,15 +65,30 @@ export default class RecipeTable extends Component {
   }
 
   render(){
-    // let allRecipes = this.state.recipes.map((elem)=>{
-    //   showEachRecipe(elem);
-    // });
     return (
-      <View>
-        <View>
+        <ScrollView style={styles.container}>
+          <Text></Text>
           {this.showRecipe()}
-        </View>
-      </View>
+        </ScrollView>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    padding: 45,
+    alignSelf: 'stretch'
+  },
+  title: {
+    fontSize: 25,
+    fontWeight: 'bold'
+  },
+  ingredients: {
+    fontSize: 18
+  },
+  detail: {
+    fontWeight: 'bold'
+  }
+});
