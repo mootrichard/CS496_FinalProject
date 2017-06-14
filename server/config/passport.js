@@ -14,9 +14,9 @@ module.exports = (passport) => {
   });
 
   passport.use(new GoogleStrategy({
-    clientID        : auth.googleAuth.clientID,
+    clientID        : auth.googleAuth.clientId,
     clientSecret    : auth.googleAuth.clientSecret,
-    callbackURL     : auth.googleAuth.callbackURL
+    callbackURL     : auth.googleAuth.callbackUrl
   }, (token, refreshToken, profile, done)=>{
     process.nextTick(()=>{
       User.findOne({'googleId': profile.id}, (err, user)=>{

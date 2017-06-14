@@ -8,7 +8,7 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const mongoose = require('mongoose');
 const routes = require('./routes');
-const mongodbUrl = require('./config/auth').mongodb.localhost;
+const mongodbUrl = require('./config/auth').mongodb.url;
 require('./config/passport')(passport);
 const app = express();
 

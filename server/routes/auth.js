@@ -25,4 +25,11 @@ router.get('/google', passport.authenticate('google', {
   })
 );
 
+router.get('/logout', (req, res, next)=>{
+  req.session.destroy();
+	req.logout();
+  console.log(req.user);
+	res.redirect('CS496FinalProject://login');
+})
+
 module.exports = router;

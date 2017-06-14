@@ -3,7 +3,6 @@ const Recipe = require('../models/recipes');
 
 module.exports = {
   create: (req, res, next)=>{
-    console.log(req.body);
     Recipe.create({
       recipeOwner : req.body.recipeOwner,
       name : req.body.name,
@@ -19,7 +18,6 @@ module.exports = {
     Recipe.find({
       'recipeOwner': req.params.googleId
     }, (err, recipes)=>{
-      console.log(recipes);
       res.json(recipes);
     })
   },

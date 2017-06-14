@@ -36,7 +36,7 @@ export default class RecipeTable extends Component {
     return this.state.recipes.map(function(recipe, i){
       return(
         <View key={i}>
-          <Text>Recipe Name: {recipe.name}</Text>
+          <Text>Recipe: {recipe.name}</Text>
           <View>
             <Text>Cook Time: {recipe.cookTime} {recipe.cookTimeQty}</Text>
             <Text>Ingredients: </Text>
@@ -45,8 +45,7 @@ export default class RecipeTable extends Component {
                 recipe.ingredients.map((ingredient, i)=>{
                   return(
                     <View key={ingredient+i}>
-                      <Text>Name: {ingredient.name}</Text>
-                      <Text>Qty: {ingredient.quantity} {ingredient.modifier}</Text>
+                      <Text>{'\t'}{'\u2022'} {ingredient.quantity} {ingredient.modifier} {ingredient.name}</Text>
                     </View>
                   )
                 })

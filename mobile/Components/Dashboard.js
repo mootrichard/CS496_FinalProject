@@ -17,13 +17,15 @@ export default class Dashboard extends Component {
   render(){
     return (
       <View style={styles.container}>
+        <RecipeTable user={this.props.user} />
+        <View style={styles.buttonWrapper}>
         <Link to="/create">
           <Text style={styles.button}>Create</Text>
         </Link>
-        <RecipeTable user={this.props.user} />
-        <Link to="/">
+        <Link to="/logout">
           <Text style={styles.button}>Logout</Text>
         </Link>
+        </View>
       </View>
     )
   }
@@ -49,5 +51,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
+  },
+  buttonWrapper: {
+        flexWrap: 'wrap',
+        alignItems: 'flex-start',
+        flexDirection:'row',
+        justifyContent: 'space-between',
+        margin: 10
   }
 });

@@ -86,9 +86,11 @@ class CreateRecipe extends Component {
 
   render(){
     return (
+      <View>
       <ScrollView style={styles.container} keyboardShouldPersistTaps={'handled'}>
         <Text style={{ fontWeight: 'bold', marginTop: 20 }}>Recipe Name</Text>
         <Field
+          style={{width: 100}}
           name={'name'}
           component={MyTextInput}
           placeholder={'name'}
@@ -109,19 +111,24 @@ class CreateRecipe extends Component {
           name={'ingredients'}
           component={renderIngredients}
         />
-        <TouchableOpacity onPress={this.props.handleSubmit(this.sendData)}>
-          <Text style={styles.button}>Submit</Text>
-        </TouchableOpacity>
-        <Link to="/dashboard">
-          <Text style={styles.button}>Back</Text>
-        </Link>
       </ScrollView>
+        <View style={styles.buttonWrapper}>
+          <Link style={{padding: 5}} to="/dashboard">
+            <Text style={styles.button}>Back</Text>
+          </Link>
+          <TouchableOpacity style={{padding: 5}} onPress={this.props.handleSubmit(this.sendData)}>
+            <Text style={styles.button}>Submit</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    flexDirection: 'column',
     padding: 45
   },
   formSubmit: {
@@ -132,8 +139,10 @@ const styles = StyleSheet.create({
     padding: 5
   },
   input: {
-    height: 30,
-    padding: 5
+      borderColor: 'black',
+      borderWidth: 1,
+      height: 37,
+      width: 300
   },
   inputContainer: {
     borderBottomWidth: 1,
@@ -158,6 +167,13 @@ const styles = StyleSheet.create({
     },
     shadowRadius: 10,
     shadowOpacity: 0.25
+  },
+  buttonWrapper: {
+        flexWrap: 'wrap',
+        alignItems: 'flex-start',
+        flexDirection:'row',
+        justifyContent: 'space-between',
+        margin: 10
   }
 });
 

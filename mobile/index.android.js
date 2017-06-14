@@ -67,14 +67,21 @@ export default class CS496FinalProject extends Component {
 
   Home = (props)=>{
       return (
-            <TouchableHighlight
-              onPress={this.loginWithGoogle}>
-              <Text style={styles.googleButton}>
-                Login Google+
-              </Text>
-            </TouchableHighlight>
+            <View>
+              <Text style={styles.welcome}>Recipe App</Text>
+              <TouchableHighlight
+                onPress={this.loginWithGoogle}>
+                <Text style={styles.googleButton}>
+                  Login Google+
+                </Text>
+              </TouchableHighlight>
+            </View>
       )
   };
+
+  Logout(){
+    this.openURL('https://richardmoot.ngrok.io/auth/logout');
+  }
 
   render() {
     return (
@@ -91,10 +98,8 @@ export default class CS496FinalProject extends Component {
           <Route path="/create" render={()=>{
             return(<CreateRecipe user={this.state.user} />)
           }} />
-          <Route path="/logout" render={()=>{
-            this.setState({
-              user: undefined
-            })
+          <Route exact path="/logout" render={()=>{
+            this.Logout();
             return (
               this.Home()
             )
@@ -124,10 +129,12 @@ const styles = StyleSheet.create({
       height: 3
     },
     shadowRadius: 10,
-    shadowOpacity: 0.25
+    shadowOpacity: 0.25,
+    textAlign: 'center',
+    fontSize: 25
   },
   welcome: {
-    fontSize: 20,
+    fontSize: 50,
     textAlign: 'center',
     margin: 10,
   },
