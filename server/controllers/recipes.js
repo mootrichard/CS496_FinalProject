@@ -22,9 +22,22 @@ module.exports = {
     })
   },
   delete: (req, res, next)=>{
-
+    Recipe.findById(req.params.recipeId, (err, recipe)=>{
+      if(recipe) {
+        recipe.remove();
+        res.status(200).send("success");
+      } else {
+        res.status(404).send("not found");
+      }
+    })
   },
   update: (req, res, next)=>{
-
+    Recipe.findById(req.params.recipeId, (err, recipe)=>{
+      for (key in req.body){
+        recipe[key] = req.body[key]
+      }
+      recipe.save();
+      res.status(200).send("success");
+    })
   }
 };

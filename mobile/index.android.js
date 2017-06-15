@@ -20,6 +20,7 @@ import { Provider } from 'react-redux';
 import Dashboard from './Components/Dashboard.js';
 import Auth from './Components/Auth';
 import CreateRecipe from './Components/CreateRecipe';
+import EditDeleteRecipe from './Components/EditDeleteRecipe';
 import store from './redux/store';
 
 
@@ -104,6 +105,7 @@ export default class CS496FinalProject extends Component {
               this.Home()
             )
           }}/>
+          <Route exact path="/edit/:recipeId" component={EditDeleteRecipe} />
           </View>
         </NativeRouter>
       </Provider>

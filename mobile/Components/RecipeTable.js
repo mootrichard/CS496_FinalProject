@@ -4,9 +4,11 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
+  TouchableHighlight,
   ScrollView
 } from 'react-native';
+import { Link } from 'react-router-native';
+import EditDeleteRecipe from './EditDeleteRecipe';
 
 export default class RecipeTable extends Component {
   constructor(props){
@@ -59,6 +61,16 @@ export default class RecipeTable extends Component {
               )
             }
           </View>
+          <View style={styles.buttonWrapper}>
+            <Link to={{
+                      pathname:`/edit/${recipe._id}`,
+                      state: {
+                        recipe: recipe
+                      }
+                    }} recipe={recipe._id}>
+              <Text style={styles.button}>Edit</Text>
+            </Link>
+          </View>
         </View>
       );
     });
@@ -90,5 +102,29 @@ const styles = StyleSheet.create({
   },
   detail: {
     fontWeight: 'bold'
+  },
+  button:{
+    color: '#FFFFFF',
+    backgroundColor: '#2E9298',
+    borderRadius: 5,
+    padding: 5,
+    shadowColor: '#000000',
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+    shadowRadius: 10,
+    shadowOpacity: 0.25,
+    margin: 10,
+    fontSize: 15,
+    alignSelf: 'center'
+  },
+  buttonWrapper: {
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    flexDirection:'row',
+    marginLeft: 50,
+    marginRight: 50,
+    marginBottom: 10
   }
 });

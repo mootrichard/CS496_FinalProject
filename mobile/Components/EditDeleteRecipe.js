@@ -57,20 +57,24 @@ const renderIngredients = ({ fields }) => (
   </View>
 )
 
-class CreateRecipe extends Component {
+class EditDeleteRecipe extends Component {
   constructor(props){
     super(props);
     this.sendData = this.sendData.bind(this);
+    this.state = {
+      recipe: this.props.location.state.recipe
+    }
+    this.props.initialValues = this.props.location.state.recipe;
+    this.deleteRecipe = this.deleteRecipe.bind(this);
   }
 
   sendData(formData){
-    formData.recipeOwner = this.props.user.googleId;
-    fetch("https://richardmoot.ngrok.io/recipes", {
+    fetch(`https://richardmoot.ngrok.io/recipes/${this.state.recipe._id}`, {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
-      method: "POST",
+      method: "PATCH",
       body: JSON.stringify(formData)
     }).then((res)=>{
       return res.json()
@@ -79,16 +83,27 @@ class CreateRecipe extends Component {
     }).catch(err=>console.log(err));
   }
 
+
+  deleteRecipe() {
+    fetch(`https://richardmoot.ngrok.io/recipes/${this.state.recipe._id}`, {
+      method: "DELETE"
+    }).then((res)=>{
+      return res.json()
+    }).catch(err=>console.log(err))
+  }
+
   render(){
+    const { match } = this.props;
     return (
       <View>
         <ScrollView style={styles.container} keyboardShouldPersistTaps={'handled'}>
+          <Text style={{ fontSize: 40, marginTop: 20 }}>Edit {this.state.recipe.name}</Text>
           <Text style={{ fontWeight: 'bold', marginTop: 20 }}>Recipe Name</Text>
           <Field
             style={{width: 100}}
             name={'name'}
             component={MyTextInput}
-            placeholder={'name'}
+            placeholder="Name"
           />
           <Text style={{ fontWeight: 'bold', marginTop: 20 }}>Cook Time</Text>
           <Field
@@ -112,6 +127,9 @@ class CreateRecipe extends Component {
             </Link>
             <TouchableOpacity style={{padding: 5}} onPress={this.props.handleSubmit(this.sendData)}>
               <Text style={styles.button}>Submit</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={{padding: 5}} to="/delete" onPress={this.deleteRecipe}>
+              <Text style={styles.button}>Delete</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
@@ -174,5 +192,7 @@ const styles = StyleSheet.create({
 });
 
 export default reduxForm({
-  form: 'createRecipe'
-})(CreateRecipe);
+  form: 'editDeleteRecipe',
+  enableReinitialize: true,
+  keepDirtyOnReinitialize: false
+})(EditDeleteRecipe);
